@@ -1,0 +1,17 @@
+<header>
+  <nav>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      Главная
+    </a>
+
+    <a routerLink="/games" routerLinkActive="active"> Игры </a>
+
+    <a routerLink="/about" routerLinkActive="active"> О проекте </a>
+
+    <a href="http://localhost:5173"> Новостной портал React </a>
+  </nav>
+</header>
+
+<main>
+  <router-outlet />
+</main>

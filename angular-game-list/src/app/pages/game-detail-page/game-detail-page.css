@@ -1,0 +1,25 @@
+.game-detail {
+    max-width: 600px;
+    margin-top: 20px;
+    padding: 20px;
+
+    border: 1px solid #ccc;
+    border-radius: 12px;
+}
+
+.game-detail img {
+    max-width: 300px;
+    width: 100%;
+}
+
+.game-detail h1 {
+    margin-bottom: 16px;
+}
+
+.game-detail p {
+    margin: 8px 0;
+}
+
+.error {
+    color: red;
+}

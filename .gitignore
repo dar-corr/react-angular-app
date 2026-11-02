@@ -1,0 +1,19 @@
+# Dependencies
+**/node_modules/
+
+# Builds
+**/dist/
+**/.angular/
+**/.vite/
+
+# Environment
+**/.env
+**/.env.*
+
+# Editors
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
