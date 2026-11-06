@@ -1,0 +1,17 @@
+<header class="site-header">
+  <nav class="navigation">
+    <a routerLink="/saved" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      Сохранённые новости
+    </a>
+
+    <a routerLink="/saved/add" routerLinkActive="active"> Добавить новость </a>
+
+    <a routerLink="/history" routerLinkActive="active"> История прочтения </a>
+
+    <a href="http://localhost:5173/news" class="react-link"> Все новости (React) </a>
+  </nav>
+</header>
+
+<main class="main-content">
+  <router-outlet />
+</main>
