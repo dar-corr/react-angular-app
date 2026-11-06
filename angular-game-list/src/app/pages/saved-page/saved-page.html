@@ -1,0 +1,69 @@
+<section class="saved-page">
+  <div class="page-heading">
+    <div>
+      <h1>Сохранённые новости</h1>
+      <p>Личный список новостей для чтения</p>
+    </div>
+
+    <div class="stats">
+      <span>Всего: {{ savedNews().length }}</span>
+      <span>Прочитано: {{ readCount() }}</span>
+    </div>
+
+    <a routerLink="/saved/add" class="button primary"> + Добавить новость </a>
+  </div>
+
+  <div class="filters">
+    <button
+      type="button"
+      [class.active]="filter() === 'all'"
+      [attr.aria-pressed]="filter() === 'all'"
+      (click)="setFilter('all')"
+    >
+      Все
+    </button>
+
+    <button
+      type="button"
+      [class.active]="filter() === 'unread'"
+      [attr.aria-pressed]="filter() === 'unread'"
+      (click)="setFilter('unread')"
+    >
+      Непрочитанные
+    </button>
+
+    <button
+      type="button"
+      [class.active]="filter() === 'read'"
+      [attr.aria-pressed]="filter() === 'read'"
+      (click)="setFilter('read')"
+    >
+      Прочитанные
+    </button>
+
+    <a routerLink="/history" class="button"> История прочтения </a>
+  </div>
+
+  @if (savedNews().length === 0) {
+    <div class="empty-state">
+      <h2>Пока нет сохранённых новостей</h2>
+      <p>Добавьте новость, чтобы прочитать её позже.</p>
+
+      <a routerLink="/saved/add" class="button primary"> Добавить новость </a>
+    </div>
+  } @else if (filteredNews().length === 0) {
+    <div class="empty-state">
+      <p>Новостей с выбранным статусом нет.</p>
+    </div>
+  } @else {
+    <div class="news-grid">
+      @for (news of filteredNews(); track news.id) {
+        <app-saved-news-card
+          [news]="news"
+          (markRead)="markAsRead($event)"
+          (remove)="removeNews($event)"
+        />
+      }
+    </div>
+  }
+</section>

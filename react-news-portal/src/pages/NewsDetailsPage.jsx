@@ -64,6 +64,16 @@ function NewsDetailsPage({ news, loading, onDeleteNews }) {
         <p className="news-full-text">{currentNews.fullText}</p>
 
         <div className="news-actions">
+          <a
+            href={`http://localhost:4200/saved/add?${new URLSearchParams({
+              id: String(currentNews.id),
+              title: currentNews.title,
+            }).toString()}`}
+            className="button"
+          >
+            Сохранить для чтения
+          </a>
+
           <Link to="/news" className="button secondary-button">
             ← Назад к новостям
           </Link>
@@ -76,7 +86,6 @@ function NewsDetailsPage({ news, loading, onDeleteNews }) {
             Удалить новость
           </button>
         </div>
-        
       </article>
     </main>
   );

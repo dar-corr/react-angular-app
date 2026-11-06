@@ -1,0 +1,68 @@
+<section class="add-page">
+  <a routerLink="/saved" class="back-link"> ← К сохранённым новостям </a>
+
+  <h1>Добавить новость</h1>
+
+  <p class="description">
+    Укажите ID и название новости из React-портала. Новость появится в вашем списке для чтения.
+  </p>
+
+  <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+    <div class="form-field">
+      <label for="news-id">ID новости</label>
+
+      <input
+        id="news-id"
+        type="text"
+        inputmode="numeric"
+        formControlName="id"
+        placeholder="Например, 1"
+        [attr.aria-invalid]="form.controls.id.touched && form.controls.id.invalid"
+      />
+
+      @if (form.controls.id.touched && form.controls.id.invalid) {
+        <span class="field-error">
+          @if (form.controls.id.hasError('required')) {
+            Укажите ID новости.
+          } @else {
+            ID должен быть положительным целым числом.
+          }
+        </span>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="news-title">Название новости</label>
+
+      <input
+        id="news-title"
+        type="text"
+        formControlName="title"
+        placeholder="Введите заголовок"
+        [attr.aria-invalid]="form.controls.title.touched && form.controls.title.invalid"
+      />
+
+      @if (form.controls.title.touched && form.controls.title.invalid) {
+        <span class="field-error">
+          @if (form.controls.title.hasError('required')) {
+            Укажите название новости.
+          } @else if (form.controls.title.hasError('minlength')) {
+            Минимум 3 символа.
+          } @else if (form.controls.title.hasError('maxlength')) {
+            Максимум 150 символов.
+          }
+        </span>
+      }
+    </div>
+
+    @if (errorMessage) {
+      <p class="form-error" role="alert">{{ errorMessage }}</p>
+    }
+
+    <div class="form-actions">
+      <button type="submit" class="save-button">Сохранить новость</button>
+
+      <a routerLink="/saved" class="cancel-button"> Отмена </a>
+    </div>
+  </form>
+</section>

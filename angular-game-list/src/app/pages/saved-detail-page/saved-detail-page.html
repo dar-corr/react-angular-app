@@ -1,0 +1,68 @@
+<section class="detail-page">
+  <a routerLink="/saved" class="back-link"> ← К сохранённым новостям </a>
+
+  @if (!ready()) {
+    <p>Загрузка сохранённых новостей...</p>
+  } @else if (newsId() === null) {
+    <div class="not-found">
+      <h1>Некорректный ID</h1>
+      <p>В адресе указан недопустимый идентификатор новости.</p>
+      <a routerLink="/saved">Вернуться к списку</a>
+    </div>
+  } @else if (currentNews(); as news) {
+    <article class="news-detail">
+      <div class="detail-header">
+        <span class="status" [class.read]="news.readAt !== null">
+          {{ news.readAt ? 'Прочитано' : 'Не прочитано' }}
+        </span>
+
+        <span class="news-id">Новость #{{ news.id }}</span>
+      </div>
+
+      <h1>{{ news.title }}</h1>
+
+      <div class="news-info">
+        <p>
+          <strong>Добавлено:</strong>
+          {{ news.savedAt | date: 'dd.MM.yyyy HH:mm' }}
+        </p>
+
+        @if (news.readAt) {
+          <p>
+            <strong>Прочитано:</strong>
+            {{ news.readAt | date: 'dd.MM.yyyy HH:mm' }}
+          </p>
+        }
+      </div>
+
+      <p class="description">Полный текст новости доступен на React-портале.</p>
+
+      <div class="actions">
+        <a class="button primary" [href]="'http://localhost:5173/news/' + news.id">
+          Открыть полную новость
+        </a>
+
+        @if (!news.readAt) {
+          <button type="button" class="button success" (click)="markAsRead()">
+            Отметить как прочитанную
+          </button>
+        }
+
+        <button type="button" class="button danger" (click)="removeNews()">
+          Удалить из сохранённых
+        </button>
+      </div>
+    </article>
+  } @else {
+    <div class="not-found">
+      <h1>Новость не найдена</h1>
+
+      <p>
+        Новость с ID {{ newsId() }}
+        отсутствует в списке сохранённых.
+      </p>
+
+      <a routerLink="/saved"> Вернуться к сохранённым новостям </a>
+    </div>
+  }
+</section>

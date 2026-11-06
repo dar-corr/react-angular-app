@@ -1,0 +1,97 @@
+<section class="history-page">
+  <div class="page-heading">
+    <div>
+      <h1>История прочтения</h1>
+      <p>Все новости, которые вы отметили как прочитанные.</p>
+    </div>
+
+    <a routerLink="/saved" class="back-link"> К сохранённым новостям </a>
+  </div>
+
+  @if (!ready()) {
+    <p>Загрузка истории...</p>
+  } @else {
+    <div class="stats">
+      <div class="stat-card">
+        <span class="stat-number">{{ totalCount() }}</span>
+        <span class="stat-label">Записей в истории</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-number">{{ uniqueCount() }}</span>
+        <span class="stat-label">Уникальных новостей</span>
+      </div>
+    </div>
+
+    @if (history().length === 0) {
+      <div class="empty-state">
+        <h2>История пока пуста</h2>
+
+        <p>Когда вы отметите новость как прочитанную, она появится здесь.</p>
+
+        <a routerLink="/saved" class="button primary"> Перейти к сохранённым </a>
+      </div>
+    } @else {
+      <div class="toolbar">
+        <h2>Прочитанные новости</h2>
+
+        <div class="sort-buttons">
+          <button
+            type="button"
+            [class.active]="order() === 'newest'"
+            [attr.aria-pressed]="order() === 'newest'"
+            (click)="setOrder('newest')"
+          >
+            Сначала новые
+          </button>
+
+          <button
+            type="button"
+            [class.active]="order() === 'oldest'"
+            [attr.aria-pressed]="order() === 'oldest'"
+            (click)="setOrder('oldest')"
+          >
+            Сначала старые
+          </button>
+        </div>
+      </div>
+
+      <ol class="history-list">
+        @for (entry of sortedHistory(); track $index) {
+          <li class="history-item">
+            <article class="history-card">
+              <div class="card-header">
+                <span class="news-id"> Новость #{{ entry.newsId }} </span>
+
+                @if (isSaved(entry.newsId)) {
+                  <span class="status saved"> В сохранённых </span>
+                } @else {
+                  <span class="status removed"> Удалена из сохранённых </span>
+                }
+              </div>
+
+              <h3>{{ entry.title }}</h3>
+
+              <p class="read-date">
+                Прочитано:
+                {{ entry.readAt | date: 'dd.MM.yyyy, HH:mm' }}
+              </p>
+
+              <div class="card-actions">
+                <a class="button primary" [href]="'http://localhost:5173/news/' + entry.newsId">
+                  Открыть в React
+                </a>
+
+                @if (isSaved(entry.newsId)) {
+                  <a class="button secondary" [routerLink]="['/saved', entry.newsId]">
+                    В сохранённых
+                  </a>
+                }
+              </div>
+            </article>
+          </li>
+        }
+      </ol>
+    }
+  }
+</section>

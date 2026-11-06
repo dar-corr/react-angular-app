@@ -36,8 +36,8 @@ function Header() {
             Добавить новость
           </NavLink>
 
-          <a href="http://localhost:4200/games" className="nav-link">
-            Каталог игр Angular
+          <a href="http://localhost:4200/saved" className="nav-link">
+            Сохранённые новости
           </a>
         </nav>
       </div>

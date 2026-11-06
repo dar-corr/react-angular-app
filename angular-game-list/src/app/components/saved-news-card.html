@@ -1,0 +1,37 @@
+<article class="news-card">
+  <div class="card-top">
+    <span class="status" [class.read]="news().readAt !== null">
+      {{ news().readAt ? 'Прочитано' : 'Не прочитано' }}
+    </span>
+
+    <span class="news-id">ID: {{ news().id }}</span>
+  </div>
+
+  <h2>{{ news().title }}</h2>
+
+  <p class="date">
+    Сохранено:
+    {{ news().savedAt | date: 'dd.MM.yyyy HH:mm' }}
+  </p>
+
+  @if (news().readAt) {
+    <p class="date">
+      Прочитано:
+      {{ news().readAt | date: 'dd.MM.yyyy HH:mm' }}
+    </p>
+  }
+
+  <div class="card-actions">
+    <a class="button" [routerLink]="['/saved', news().id]"> Подробнее </a>
+
+    <a class="button primary" [href]="'http://localhost:5173/news/' + news().id">
+      Открыть в React
+    </a>
+
+    @if (!news().readAt) {
+      <button type="button" (click)="onMarkRead()">Прочитано</button>
+    }
+
+    <button type="button" class="danger" (click)="onRemove()">Удалить</button>
+  </div>
+</article>
