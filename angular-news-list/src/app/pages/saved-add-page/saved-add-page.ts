@@ -1,7 +1,31 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SavedNewsService } from '../../services/saved-news';
+
+function titleValidator(control: AbstractControl): ValidationErrors | null {
+  const title = String(control.value ?? '').trim();
+
+  if (!title) {
+    return { required: true };
+  }
+
+  if (title.length < 3) {
+    return { minlength: true };
+  }
+
+  if (title.length > 150) {
+    return { maxlength: true };
+  }
+
+  return null;
+}
 
 @Component({
   selector: 'app-saved-add-page',
@@ -20,7 +44,7 @@ export class SavedAddPage {
 
   readonly form = this.fb.nonNullable.group({
     id: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
-    title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
+    title: ['', [titleValidator]],
   });
 
   constructor() {
